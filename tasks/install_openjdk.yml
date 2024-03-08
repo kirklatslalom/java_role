@@ -96,6 +96,7 @@
   until: java_package_installed is succeeded
   register: java_package_installed
   when: ansible_os_family == 'Debian'
+  become: true
 
 - name: Java | Install Java, RedHat
   yum:
