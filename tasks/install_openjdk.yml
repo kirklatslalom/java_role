@@ -61,6 +61,7 @@
         update_cache: true
       with_items: "{{ java_required_repositories_openjdk }}"
   when: ansible_os_family == 'Debian'
+  become: true
 
 - name: Java | RedHat pre-requisites
   block:
