@@ -34,34 +34,34 @@
   set_fact:
     java_home: "{{ java_open_jdk_home }}"
 
-- name: Java | Debian pre-requisites
-  block:
-    - name: Java | Remove deprecated repositories
-      apt_repository:
-        repo: "{{ item }}"
-        state: absent
-      with_items: "{{ java_deprecated_repositories_adoptopenjdk }}"
-      when: java_deprecated_repositories_adoptopenjdk | length > 0
-    - name: Java | Install extra apt tools
-      package:
-        name: "{{ java_open_jdk_apt_extra_packages }}"
-        state: present
-      until: apt_tools_installed is succeeded
-      register: apt_tools_installed
-      when: java_open_jdk_apt_extra_packages |length > 0
-    - name: Java | add required key repositories, Debian
-      apt_key:
-        url: "{{ item }}"
-        state: present
-      with_items: "{{ java_required_key_repositories_openjdk }}"
-    - name: Java | Add required repositories, Debian
-      apt_repository:
-        repo: "{{ item }}"
-        state: present
-        update_cache: true
-      with_items: "{{ java_required_repositories_openjdk }}"
-  when: ansible_os_family == 'Debian'
-  become: true
+# - name: Java | Debian pre-requisites
+#  block:
+#    - name: Java | Remove deprecated repositories
+#      apt_repository:
+#        repo: "{{ item }}"
+#        state: absent
+#      with_items: "{{ java_deprecated_repositories_adoptopenjdk }}"
+#      when: java_deprecated_repositories_adoptopenjdk | length > 0
+#    - name: Java | Install extra apt tools
+#      package:
+#        name: "{{ java_open_jdk_apt_extra_packages }}"
+#        state: present
+#      until: apt_tools_installed is succeeded
+#      register: apt_tools_installed
+#      when: java_open_jdk_apt_extra_packages |length > 0
+#    - name: Java | add required key repositories, Debian
+#      apt_key:
+#        url: "{{ item }}"
+#        state: present
+#      with_items: "{{ java_required_key_repositories_openjdk }}"
+#    - name: Java | Add required repositories, Debian
+#      apt_repository:
+#        repo: "{{ item }}"
+#        state: present
+#        update_cache: true
+#      with_items: "{{ java_required_repositories_openjdk }}"
+#  when: ansible_os_family == 'Debian'
+#  become: true
 
 - name: Java | RedHat pre-requisites
   block:
